@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    var fDivs = '<div id="fb-root"></div><div id="google_translate_element" style="display: none;"></div>'; 
+    $('body').append(fDivs);
+});
+
 //=============================================================
 // FACEBOOK FUNCTIONS
 //=============================================================
