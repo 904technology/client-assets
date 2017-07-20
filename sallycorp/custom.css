@@ -1,1 +1,19 @@
+.full-width-tab-link:focus , .search-form-wrapper:focus, .quick-search:focus {
+  outline : none;
+}
 
+.search-scroll {
+  overflow-y:scroll;
+}
+
+/* --- Uncomment the styles below to hide the google translate bar - advise- leave as is---
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+  }
+
+  body {
+  top: 0px !important;
+  } 
+
+  */
