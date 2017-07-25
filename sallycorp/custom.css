@@ -2,6 +2,21 @@
 .search-scroll {overflow-y:scroll;}
 .translate {display: block;width: 100%;padding: 5px 20px;font-size: 14px;text-decoration: none;color: grey;border-top: #333;}
 
+.bx-wrapper {
+  max-width: 100% !important;
+  position: relative;
+  margin-bottom: 60px;
+  padding: 0;
+  *zoom: 1;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+}
+
+.bx-viewport {
+  /*fix other elements on the page moving (on Chrome)*/
+  -webkit-transform: translatez(0);
+}
+
 /* --- Uncomment the styles below to hide the google translate bar - advise- leave as is---
 
 .goog-te-banner-frame.skiptranslate {
