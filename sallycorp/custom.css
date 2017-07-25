@@ -1,19 +1,15 @@
-.full-width-tab-link:focus , .search-form-wrapper:focus, .quick-search:focus {
-  outline : none;
-}
-
-.search-scroll {
-  overflow-y:scroll;
-}
+.full-width-tab-link:focus , .search-form-wrapper:focus, .quick-search:focus {outline : none;}
+.search-scroll {overflow-y:scroll;}
+.translate {display: block;width: 100%;padding: 5px 20px;font-size: 14px;text-decoration: none;color: grey;border-top: #333;}
 
 /* --- Uncomment the styles below to hide the google translate bar - advise- leave as is---
 
 .goog-te-banner-frame.skiptranslate {
-  display: none !important;
-  }
+display: none !important;
+}
 
-  body {
-  top: 0px !important;
-  } 
+body {
+top: 0px !important;
+}
 
-  */
+*/
