@@ -1,3 +1,7 @@
+//=============================================================
+// APPEND FB AND GTRANSLATE DIVS TO BODY
+//=============================================================
+
 $(document).ready(function () {
     var fDivs = '<div id="fb-root"></div><div id="google_translate_element" style="display: none;"></div>'; 
     $('body').append(fDivs);
@@ -341,5 +345,5 @@ $('.logo-slider').bxSlider({
     slideWidth: 170,
     slideMargin: 10,
     ticker: true,
-    speed: 350000
+    speed: 250000
 });
