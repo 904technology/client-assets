@@ -347,3 +347,10 @@ $('.logo-slider').bxSlider({
     ticker: true,
     speed: 250000
 });
+
+//=============================================================
+// FIX EMAIL SHARING
+//=============================================================
+function emailCurrentPage(){
+        window.location.href="mailto:?subject="+document.title+"&body="+escape(window.location.href);
+    }
