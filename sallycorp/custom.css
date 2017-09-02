@@ -22,6 +22,7 @@
 .slick-arrow {outline: none;}
 
 /* --- Uncomment the styles below to hide the google translate bar - advise- leave as is---
+
 .goog-te-banner-frame.skiptranslate {
 display: none !important;
 }
@@ -29,4 +30,5 @@ display: none !important;
 body {
 top: 0px !important;
 }
+
 */
