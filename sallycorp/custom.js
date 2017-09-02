@@ -375,6 +375,6 @@ $(".slider-randomize").on("click", function() {
 
 $(document).ready ( function () {
     setInterval(function () {
-        $("slider-randomize").click();
+        $(".slider-randomize").click();
     }, 9000);
 });
