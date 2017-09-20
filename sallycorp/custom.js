@@ -377,8 +377,8 @@ $(".testimonial-slider").slick({
 //   i = (r === i) ? i + 1 : r;
 // });
 
-$(document).ready(function() {
-  setInterval(function() { $(".slider-randomize").click(); }, 9000);
-  $(".slick-arrow").text("");
-});
+// $(document).ready(function() {
+//   setInterval(function() { $(".slider-randomize").click(); }, 9000);
+//   $(".slick-arrow").text("");
+// });
 
