@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $('.twitter-feed').socialfeed({
     twitter:{
-      accounts: ['@leaxem'],
+      accounts: ['@us1logix'],
       limit: 10,
       consumer_key: 'fFCAJM2CPRQHq8cVaYOS1jqmf',
       consumer_secret: 'QDeGNpMW2PY3kwyz7cfdEIILcgwVyVE31oNe1m0at6qwBrArGP'
