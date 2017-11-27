@@ -1,10 +1,10 @@
 $(document).ready(function(){
   $('.twitter-feed').socialfeed({
     twitter:{
-      accounts: ['@leaxem'],                      //Array: Specify a list of accounts from which to pull tweets
-      limit: 10,                                   //Integer: max number of tweets to load
-      consumer_key: 'VG0J6h6tC3KG285QT6PoF9KmJ',          //String: consumer key. make sure to have your app read-only
-      consumer_secret: 'i2Oy9V7vNyVNGGG4DdlhAPJz4zV3NPkfrGtUW8jcsAdO1tXJ2U' //String: consumer secret key. make sure to have your app read-only
+      accounts: ['@leaxem'],
+      limit: 10,
+      consumer_key: 'fFCAJM2CPRQHq8cVaYOS1jqmf',
+      consumer_secret: 'QDeGNpMW2PY3kwyz7cfdEIILcgwVyVE31oNe1m0at6qwBrArGP'
     },
 
     // GENERAL SETTINGS
