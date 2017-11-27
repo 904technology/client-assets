@@ -30,5 +30,8 @@ $(document).ready(function(){
     </div>',
     date_format: "ll",
     date_locale: "en",
+    callback: function() {
+        $('.loading-tweets').hide();
+    }
   });
 });
