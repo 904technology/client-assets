@@ -39,10 +39,8 @@ $(document).ready(function(){
                 var post = new SocialFeedPost('twitter', Feed.twitter.utility.unifyPostData(element));
                 post.render();
             });
+            $('.loading-tweets').hide();
         }
-    },
-    callback: function() {
-        $('.loading-tweets').hide();
     }
   });
 });
