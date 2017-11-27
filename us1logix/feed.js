@@ -1,6 +1,5 @@
 $(document).ready(function(){
     $("body").on('DOMSubtreeModified', ".twitter-feed", function() {
-    alert('changed');
     $('.loading-tweets').hide();
   });
   
