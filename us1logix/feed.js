@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    $("body").on('DOMSubtreeModified', ".twitter-feed", function() {
+    alert('changed');
+    $('.loading-tweets').hide();
+  });
+  
   $('.twitter-feed').socialfeed({
     twitter:{
       accounts: ['@us1logix'],
@@ -30,17 +35,5 @@ $(document).ready(function(){
     </div>',
     date_format: "ll",
     date_locale: "en",
-    getPosts: function(json) {
-        if (json) {
-            // fix callback render
-            if(json.length<options.twitter.limit) posts_to_load_count -= options.twitter.limit - json.length;
-            $.each(json, function() {
-                var element = this;
-                var post = new SocialFeedPost('twitter', Feed.twitter.utility.unifyPostData(element));
-                post.render();
-            });
-            $('.loading-tweets').hide();
-        }
-    }
   });
 });
