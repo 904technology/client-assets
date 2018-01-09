@@ -147,7 +147,7 @@ $(document).ready(function () {
 
     var $grid = $('.search-results').isotope({
         itemSelector: '.single-search-result',
-        layoutMode: 'vertical',
+//         layoutMode: 'vertical',
         filter: function () {
             return qsRegex ? $(this).text().match(qsRegex) : true;
         }
