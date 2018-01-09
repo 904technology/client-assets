@@ -55,6 +55,11 @@ $(document).ready(function () {
     }
 
     var $quicksearch = $('.quick-search').keyup( debounce( searchFilter ) );
+    
+    $('.quick-search').on('focus', function () {
+        $grid.isotope();
+        searchFilter();
+    });
 
     $grid.on('arrangeComplete', function (event, filteredItems) {
         if (filteredItems.length === 0) {
