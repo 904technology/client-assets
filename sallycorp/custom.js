@@ -302,20 +302,26 @@ qsRegex = new RegExp( $quicksearch.val(), 'gi' );
 $grid.isotope();
 }, 200 ) );
 
+$grid.on('arrangeComplete', function (event, filteredItems) {
+    if (filteredItems.length === 0) {
+      $('.no-results').css('opacity','1');
+    } else {
+      $('.no-results').removeAttr('style');
+    }
+});
 
-// debounce so filtering doesn't happen every millisecond
 function debounce( fn, threshold ) {
-var timeout;
-return function debounced() {
-    if ( timeout ) {
-        clearTimeout( timeout );
+    var timeout;
+    return function debounced() {
+        if ( timeout ) {
+            clearTimeout( timeout );
+        }
+        function delayed() {
+            fn();
+            timeout = null;
+        }
+        timeout = setTimeout( delayed, threshold || 100 );
     }
-    function delayed() {
-        fn();
-        timeout = null;
-    }
-    timeout = setTimeout( delayed, threshold || 100 );
-}
 } ;
 
 
