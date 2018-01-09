@@ -162,9 +162,9 @@ $(document).ready(function () {
 
     $grid.on('arrangeComplete', function (event, filteredItems) {
         if (filteredItems.length === 0) {
-          $('.no-results').css('opacity','1');
+          $('.no-results').fadeIn(500);
         } else {
-          $('.no-results').removeAttr('style');
+          $('.no-results').fadeOut(150);
         }
     });
 
