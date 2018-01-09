@@ -36,157 +36,153 @@ fjs.parentNode.insertBefore(js, fjs);
 var e;t?(t=n.makeArray(t),e=this.getItems(t)):e=this.items,this._getSorters(),this._updateItemsSortData(e)},l._getSorters=function(){var t=this.options.getSortData;for(var e in t){var i=t[e];this._sorters[e]=f(i)}},l._updateItemsSortData=function(t){for(var e=t&&t.length,i=0;e&&i<e;i++){var o=t[i];o.updateSortData()}};var f=function(){function t(t){if("string"!=typeof t)return t;var i=h(t).split(" "),o=i[0],n=o.match(/^\[(.+)\]$/),s=n&&n[1],r=e(s,o),a=d.sortDataParsers[i[1]];return t=a?function(t){return t&&a(r(t))}:function(t){return t&&r(t)}}function e(t,e){return t?function(e){return e.getAttribute(t)}:function(t){var i=t.querySelector(e);return i&&i.textContent}}return t}();d.sortDataParsers={parseInt:function(t){return parseInt(t,10)},parseFloat:function(t){return parseFloat(t)}},l._sort=function(){if(this.options.sortBy){var t=n.makeArray(this.options.sortBy);this._getIsSameSortBy(t)||(this.sortHistory=t.concat(this.sortHistory));var e=a(this.sortHistory,this.options.sortAscending);this.filteredItems.sort(e)}},l._getIsSameSortBy=function(t){for(var e=0;e<t.length;e++)if(t[e]!=this.sortHistory[e])return!1;return!0},l._mode=function(){var t=this.options.layoutMode,e=this.modes[t];if(!e)throw new Error("No layout mode: "+t);return e.options=this.options[t],e},l._resetLayout=function(){e.prototype._resetLayout.call(this),this._mode()._resetLayout()},l._getItemLayoutPosition=function(t){return this._mode()._getItemLayoutPosition(t)},l._manageStamp=function(t){this._mode()._manageStamp(t)},l._getContainerSize=function(){return this._mode()._getContainerSize()},l.needsResizeLayout=function(){return this._mode().needsResizeLayout()},l.appended=function(t){var e=this.addItems(t);if(e.length){var i=this._filterRevealAdded(e);this.filteredItems=this.filteredItems.concat(i)}},l.prepended=function(t){var e=this._itemize(t);if(e.length){this._resetLayout(),this._manageStamps();var i=this._filterRevealAdded(e);this.layoutItems(this.filteredItems),this.filteredItems=i.concat(this.filteredItems),this.items=e.concat(this.items)}},l._filterRevealAdded=function(t){var e=this._filter(t);return this.hide(e.needHide),this.reveal(e.matches),this.layoutItems(e.matches,!0),e.matches},l.insert=function(t){var e=this.addItems(t);if(e.length){var i,o,n=e.length;for(i=0;i<n;i++)o=e[i],this.element.appendChild(o.element);var s=this._filter(e).matches;for(i=0;i<n;i++)e[i].isLayoutInstant=!0;for(this.arrange(),i=0;i<n;i++)delete e[i].isLayoutInstant;this.reveal(s)}};var c=l.remove;return l.remove=function(t){t=n.makeArray(t);var e=this.getItems(t);c.call(this,t);for(var i=e&&e.length,o=0;i&&o<i;o++){var s=e[o];n.removeFrom(this.filteredItems,s)}},l.shuffle=function(){for(var t=0;t<this.items.length;t++){var e=this.items[t];e.sortData.random=Math.random()}this.options.sortBy="random",this._sort(),this._layout()},l._noTransition=function(t,e){var i=this.options.transitionDuration;this.options.transitionDuration=0;var o=t.apply(this,e);return this.options.transitionDuration=i,o},l.getFilteredItemElements=function(){return this.filteredItems.map(function(t){return t.element})},d});
 
 // FILTER VIA BUTTONS
-
-(function($){
-
-// init Isotope
-var $grid = $('.grid').isotope({
-    itemSelector: '.grid-item',
-    layoutMode: 'masonry',
-    getSortData: {
-        name: '.filter-values'
-    }
-});
-
-// filter functions
-var filterFns = {
-
-    //--- Dark Rides
-
-    'license-free': function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /license-free/gi );
-    },
-
-    ip: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /ip/gi );
-    },
-
-    educational: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /educational/gi );
-    },
-
-    'animated-shows': function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /animated-shows/gi );
-    },
-
-    blacklight: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /blacklight/gi );
-    },
-
-    custom: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /blacklight/gi );
-    },
-
-    redeveloped: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /redeveloped/gi );
-    },
-
-    interactive: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /interactive/gi );
-    },
-
-    'mixed-media': function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /mixed-media/gi );
-    },
-
-    //---- Animatronics
-
-    lifelike: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /lifelike/gi );
-    },
-
-    fantasy: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /fantasy/gi );
-    },
-
-    haunted: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /haunted/gi );
-    },
-
-    animals: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /animals/gi );
-    },
-
-    shows: function() {
-        var name = $(this).find('.filter-values').text();
-        return name.match( /shows/gi );
-    }
-};
-
-// bind filter button click
-$('#filters').on( 'click', 'a', function() {
-    var filterValue = $( this ).attr('data-filter');
-    // use filterFn if matches value
-    filterValue = filterFns[ filterValue ] || filterValue;
-    $grid.isotope({ filter: filterValue });
-});
-
-// change is-checked class on buttons
-$('.button-group').each( function( i, buttonGroup ) {
-    var $buttonGroup = $( buttonGroup );
-    $buttonGroup.on( 'click', 'a', function() {
-        $buttonGroup.find('.is-checked').removeClass('is-checked');
-        $( this ).addClass('is-checked');
+$(document).ready(function () {
+    (function($){
+        
+    var $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        layoutMode: 'masonry',
+        getSortData: {
+            name: '.filter-values'
+        }
     });
-});
-})(jQuery)
+        
+    var filterFns = {
 
+        //--- Dark Rides
 
-// FILTER VIA SEARCH
+        'license-free': function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /license-free/gi );
+        },
 
-var qsRegex;
+        ip: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /ip/gi );
+        },
 
-var $grid = $('.search-results').joysearch({
-    itemSelector: '.single-search-result',
-    layoutMode: 'vertical',
-    filter: function () {
-        return qsRegex ? $(this).text().match(qsRegex) : true;
-    }
-});
+        educational: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /educational/gi );
+        },
 
-function searchFilter() {
-    qsRegex = new RegExp($quicksearch.val(), 'gi');
-    $grid.joysearch();
-}
+        'animated-shows': function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /animated-shows/gi );
+        },
 
-var $quicksearch = $('.quick-search').keyup( debounce( searchFilter ) );
+        blacklight: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /blacklight/gi );
+        },
 
-$grid.on('arrangeComplete', function (event, filteredItems) {
-    if (filteredItems.length === 0) {
-      $('.no-results').css('opacity','1');
-    } else {
-      $('.no-results').removeAttr('style');
-    }
-});
+        custom: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /blacklight/gi );
+        },
 
-function debounce(fn, threshold) {
-    var timeout;
-    return function debounced() {
-        if (timeout) {
-            clearTimeout(timeout);
+        redeveloped: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /redeveloped/gi );
+        },
+
+        interactive: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /interactive/gi );
+        },
+
+        'mixed-media': function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /mixed-media/gi );
+        },
+
+        //---- Animatronics
+
+        lifelike: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /lifelike/gi );
+        },
+
+        fantasy: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /fantasy/gi );
+        },
+
+        haunted: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /haunted/gi );
+        },
+
+        animals: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /animals/gi );
+        },
+
+        shows: function() {
+            var name = $(this).find('.filter-values').text();
+            return name.match( /shows/gi );
         }
+    };
 
-        function delayed() {
-            fn();
-            timeout = null;
+    $('#filters').on( 'click', 'a', function() {
+        var filterValue = $( this ).attr('data-filter');
+        // use filterFn if matches value
+        filterValue = filterFns[ filterValue ] || filterValue;
+        $grid.isotope({ filter: filterValue });
+    });
+
+    $('.button-group').each( function( i, buttonGroup ) {
+        var $buttonGroup = $( buttonGroup );
+        $buttonGroup.on( 'click', 'a', function() {
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $( this ).addClass('is-checked');
+        });
+    });
+    })(jQuery)
+
+
+    // FILTER VIA SEARCH
+
+    var qsRegex;
+
+    var $grid = $('.search-results').isotope({
+        itemSelector: '.single-search-result',
+        layoutMode: 'vertical',
+        filter: function () {
+            return qsRegex ? $(this).text().match(qsRegex) : true;
         }
-        timeout = setTimeout(delayed, threshold || 350);
-    }
-} ;
+    });
 
+    function searchFilter() {
+        qsRegex = new RegExp($quicksearch.val(), 'gi');
+        $grid.isotope();
+    }
+
+    var $quicksearch = $('.quick-search').keyup( debounce( searchFilter ) );
+
+    $grid.on('arrangeComplete', function (event, filteredItems) {
+        if (filteredItems.length === 0) {
+          $('.no-results').css('opacity','1');
+        } else {
+          $('.no-results').removeAttr('style');
+        }
+    });
+
+    function debounce(fn, threshold) {
+        var timeout;
+        return function debounced() {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+
+            function delayed() {
+                fn();
+                timeout = null;
+            }
+            timeout = setTimeout(delayed, threshold || 350);
+        }
+    }
+});
 
 
 //=============================================================
