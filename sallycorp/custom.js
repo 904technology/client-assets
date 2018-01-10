@@ -200,13 +200,13 @@ $(document).ready(function () {
         searchFilter();
     });
 
-    $grid.on('arrangeComplete', function (event, filteredItems) {
-        if (filteredItems.length === 0) {
-          $('.no-results').fadeIn(500);
-        } else {
-          $('.no-results').fadeOut(150);
-        }
-    });
+//     $grid.on('arrangeComplete', function (event, filteredItems) {
+//         if (filteredItems.length === 0) {
+//           $('.no-results').fadeIn(500);
+//         } else {
+//           $('.no-results').fadeOut(150);
+//         }
+//     });
 
     function debounce(fn, threshold) {
         var timeout;
