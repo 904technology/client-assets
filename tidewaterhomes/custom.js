@@ -262,6 +262,10 @@ $(document).ready(function() {
         });
     });
     
+    $('#siteDirections,#sitePlanImage').each(function(){
+        $(this).attr( 'href', $(this).find('img').attr('src') ); 
+    });    
+    
     $('.prop-enquire-checkbox').each(function () {
         $(this).change(function () {
             if ($(this).prop('checked') === true ) {
