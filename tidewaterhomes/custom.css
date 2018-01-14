@@ -21,3 +21,15 @@ a:focus, button:focus {
 .now-showing-description>div:nth-last-child(1) {
     border: 0px !important;
 }
+
+@media (max-width: 1115px) {
+    .nav-social-link {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .nav-social-link {
+        display: flex;
+    }
+}
