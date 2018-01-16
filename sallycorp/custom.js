@@ -129,9 +129,9 @@ SubClass.prototype=Object.create(Parent.prototype);SubClass.prototype.constructo
 var msUnits={ms:1,s:1000};function getMilliseconds(time){if(typeof time=='number'){return time}
 var matches=time.match(/(^\d*\.?\d*)(\w*)/);var num=matches&&matches[1];var unit=matches&&matches[2];if(!num.length){return 0}
 num=parseFloat(num);var mult=msUnits[unit]||1;return num*mult}
-Outlayer.Item=Item;return Outlayer}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/item',['outlayer/outlayer'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('outlayer'))}else{window.isotope=window.isotope||{};window.isotope.Item=factory(window.Outlayer)}}(window,function factory(Outlayer){'use strict';function Item(){Outlayer.Item.apply(this,arguments)}
+Outlayer.Item=Item;return Outlayer}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/item',['outlayer/outlayer'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('outlayer'))}else{window.Isotope=window.Isotope||{};window.Isotope.Item=factory(window.Outlayer)}}(window,function factory(Outlayer){'use strict';function Item(){Outlayer.Item.apply(this,arguments)}
 var proto=Item.prototype=Object.create(Outlayer.Item.prototype);var _create=proto._create;proto._create=function(){this.id=this.layout.itemGUID++;_create.call(this);this.sortData={}};proto.updateSortData=function(){if(this.isIgnored){return}
-this.sortData.id=this.id;this.sortData['original-order']=this.id;this.sortData.random=Math.random();var getSortData=this.layout.options.getSortData;var sorters=this.layout._sorters;for(var key in getSortData){var sorter=sorters[key];this.sortData[key]=sorter(this.element,this)}};var _destroy=proto.destroy;proto.destroy=function(){_destroy.apply(this,arguments);this.css({display:''})};return Item}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-mode',['get-size/get-size','outlayer/outlayer'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('get-size'),require('outlayer'))}else{window.isotope=window.isotope||{};window.isotope.LayoutMode=factory(window.getSize,window.Outlayer)}}(window,function factory(getSize,Outlayer){'use strict';function LayoutMode(isotope){this.isotope=isotope;if(isotope){this.options=isotope.options[this.namespace];this.element=isotope.element;this.items=isotope.filteredItems;this.size=isotope.size}}
+this.sortData.id=this.id;this.sortData['original-order']=this.id;this.sortData.random=Math.random();var getSortData=this.layout.options.getSortData;var sorters=this.layout._sorters;for(var key in getSortData){var sorter=sorters[key];this.sortData[key]=sorter(this.element,this)}};var _destroy=proto.destroy;proto.destroy=function(){_destroy.apply(this,arguments);this.css({display:''})};return Item}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-mode',['get-size/get-size','outlayer/outlayer'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('get-size'),require('outlayer'))}else{window.Isotope=window.Isotope||{};window.Isotope.LayoutMode=factory(window.getSize,window.Outlayer)}}(window,function factory(getSize,Outlayer){'use strict';function LayoutMode(isotope){this.isotope=isotope;if(isotope){this.options=isotope.options[this.namespace];this.element=isotope.element;this.items=isotope.filteredItems;this.size=isotope.size}}
 var proto=LayoutMode.prototype;var facadeMethods=['_resetLayout','_getItemLayoutPosition','_manageStamp','_getContainerSize','_getElementOffset','needsResizeLayout','_getOption'];facadeMethods.forEach(function(methodName){proto[methodName]=function(){return Outlayer.prototype[methodName].apply(this.isotope,arguments)}});proto.needsVerticalResizeLayout=function(){var size=getSize(this.isotope.element);var hasSizes=this.isotope.size&&size;return hasSizes&&size.innerHeight!=this.isotope.size.innerHeight};proto._getMeasurement=function(){this.isotope._getMeasurement.apply(this,arguments)};proto.getColumnWidth=function(){this.getSegmentSize('column','Width')};proto.getRowHeight=function(){this.getSegmentSize('row','Height')};proto.getSegmentSize=function(segment,size){var segmentName=segment+size;var outerSize='outer'+size;this._getMeasurement(segmentName,outerSize);if(this[segmentName]){return}
 var firstItemSize=this.getFirstItemSize();this[segmentName]=firstItemSize&&firstItemSize[outerSize]||this.isotope.size['inner'+size]};proto.getFirstItemSize=function(){var firstItem=this.isotope.filteredItems[0];return firstItem&&firstItem.element&&getSize(firstItem.element)};proto.layout=function(){this.isotope.layout.apply(this.isotope,arguments)};proto.getSize=function(){this.isotope.getSize();this.size=this.isotope.size};LayoutMode.modes={};LayoutMode.create=function(namespace,options){function Mode(){LayoutMode.apply(this,arguments)}
 Mode.prototype=Object.create(proto);Mode.prototype.constructor=Mode;if(options){Mode.options=options}
@@ -143,10 +143,10 @@ var colGroup=[];var groupCount=this.cols+1-colSpan;for(var i=0;i<groupCount;i++)
 return colGroup};Masonry.prototype._manageStamp=function(stamp){var stampSize=getSize(stamp);var offset=this._getElementOffset(stamp);var isOriginLeft=this._getOption('originLeft');var firstX=isOriginLeft?offset.left:offset.right;var lastX=firstX+stampSize.outerWidth;var firstCol=Math.floor(firstX/this.columnWidth);firstCol=Math.max(0,firstCol);var lastCol=Math.floor(lastX/this.columnWidth);lastCol-=lastX%this.columnWidth?0:1;lastCol=Math.min(this.cols-1,lastCol);var isOriginTop=this._getOption('originTop');var stampMaxY=(isOriginTop?offset.top:offset.bottom)+stampSize.outerHeight;for(var i=firstCol;i<=lastCol;i++){this.colYs[i]=Math.max(stampMaxY,this.colYs[i])}};Masonry.prototype._getContainerSize=function(){this.maxY=Math.max.apply(Math,this.colYs);var size={height:this.maxY};if(this._getOption('fitWidth')){size.width=this._getContainerFitWidth()}
 return size};Masonry.prototype._getContainerFitWidth=function(){var unusedCols=0;var i=this.cols;while(--i){if(this.colYs[i]!==0){break}
 unusedCols++}
-return(this.cols-unusedCols)*this.columnWidth-this.gutter};Masonry.prototype.needsResizeLayout=function(){var previousWidth=this.containerWidth;this.getContainerWidth();return previousWidth!=this.containerWidth};return Masonry}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-modes/masonry',['../layout-mode','masonry/masonry'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('../layout-mode'),require('masonry-layout'))}else{factory(window.isotope.LayoutMode,window.Masonry)}}(window,function factory(LayoutMode,Masonry){'use strict';var MasonryMode=LayoutMode.create('masonry');var proto=MasonryMode.prototype;var keepModeMethods={_getElementOffset:!0,layout:!0,_getMeasurement:!0};for(var method in Masonry.prototype){if(!keepModeMethods[method]){proto[method]=Masonry.prototype[method]}}
+return(this.cols-unusedCols)*this.columnWidth-this.gutter};Masonry.prototype.needsResizeLayout=function(){var previousWidth=this.containerWidth;this.getContainerWidth();return previousWidth!=this.containerWidth};return Masonry}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-modes/masonry',['../layout-mode','masonry/masonry'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('../layout-mode'),require('masonry-layout'))}else{factory(window.Isotope.LayoutMode,window.Masonry)}}(window,function factory(LayoutMode,Masonry){'use strict';var MasonryMode=LayoutMode.create('masonry');var proto=MasonryMode.prototype;var keepModeMethods={_getElementOffset:!0,layout:!0,_getMeasurement:!0};for(var method in Masonry.prototype){if(!keepModeMethods[method]){proto[method]=Masonry.prototype[method]}}
 var measureColumns=proto.measureColumns;proto.measureColumns=function(){this.items=this.isotope.filteredItems;measureColumns.call(this)};var _getOption=proto._getOption;proto._getOption=function(option){if(option=='fitWidth'){return this.options.isFitWidth!==undefined?this.options.isFitWidth:this.options.fitWidth}
-return _getOption.apply(this.isotope,arguments)};return MasonryMode}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-modes/fit-rows',['../layout-mode'],factory)}else if(typeof exports=='object'){module.exports=factory(require('../layout-mode'))}else{factory(window.isotope.LayoutMode)}}(window,function factory(LayoutMode){'use strict';var FitRows=LayoutMode.create('fitRows');var proto=FitRows.prototype;proto._resetLayout=function(){this.x=0;this.y=0;this.maxY=0;this._getMeasurement('gutter','outerWidth')};proto._getItemLayoutPosition=function(item){item.getSize();var itemWidth=item.size.outerWidth+this.gutter;var containerWidth=this.isotope.size.innerWidth+this.gutter;if(this.x!==0&&itemWidth+this.x>containerWidth){this.x=0;this.y=this.maxY}
-var position={x:this.x,y:this.y};this.maxY=Math.max(this.maxY,this.y+item.size.outerHeight);this.x+=itemWidth;return position};proto._getContainerSize=function(){return{height:this.maxY}};return FitRows}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-modes/vertical',['../layout-mode'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('../layout-mode'))}else{factory(window.isotope.LayoutMode)}}(window,function factory(LayoutMode){'use strict';var Vertical=LayoutMode.create('vertical',{horizontalAlignment:0});var proto=Vertical.prototype;proto._resetLayout=function(){this.y=0};proto._getItemLayoutPosition=function(item){item.getSize();var x=(this.isotope.size.innerWidth-item.size.outerWidth)*this.options.horizontalAlignment;var y=this.y;this.y+=item.size.outerHeight;return{x:x,y:y}};proto._getContainerSize=function(){return{height:this.y}};return Vertical}));(function(window,factory){if(typeof define=='function'&&define.amd){define(['outlayer/outlayer','get-size/get-size','desandro-matches-selector/matches-selector','fizzy-ui-utils/utils','isotope/js/item','isotope/js/layout-mode','isotope/js/layout-modes/masonry','isotope/js/layout-modes/fit-rows','isotope/js/layout-modes/vertical'],function(Outlayer,getSize,matchesSelector,utils,Item,LayoutMode){return factory(window,Outlayer,getSize,matchesSelector,utils,Item,LayoutMode)})}else if(typeof module=='object'&&module.exports){module.exports=factory(window,require('outlayer'),require('get-size'),require('desandro-matches-selector'),require('fizzy-ui-utils'),require('isotope/js/item'),require('isotope/js/layout-mode'),require('isotope/js/layout-modes/masonry'),require('isotope/js/layout-modes/fit-rows'),require('isotope/js/layout-modes/vertical'))}else{window.isotope=factory(window,window.Outlayer,window.getSize,window.matchesSelector,window.fizzyUIUtils,window.isotope.Item,window.isotope.LayoutMode)}}(window,function factory(window,Outlayer,getSize,matchesSelector,utils,Item,LayoutMode){var jQuery=window.jQuery;var trim=String.prototype.trim?function(str){return str.trim()}:function(str){return str.replace(/^\s+|\s+$/g,'')};var isotope=Outlayer.create('isotope',{layoutMode:'masonry',isJQueryFiltering:!0,sortAscending:!0});isotope.Item=Item;isotope.LayoutMode=LayoutMode;var proto=isotope.prototype;proto._create=function(){this.itemGUID=0;this._sorters={};this._getSorters();Outlayer.prototype._create.call(this);this.modes={};this.filteredItems=this.items;this.sortHistory=['original-order'];for(var name in LayoutMode.modes){this._initLayoutMode(name)}};proto.reloadItems=function(){this.itemGUID=0;Outlayer.prototype.reloadItems.call(this)};proto._itemize=function(){var items=Outlayer.prototype._itemize.apply(this,arguments);for(var i=0;i<items.length;i++){var item=items[i];item.id=this.itemGUID++}
+return _getOption.apply(this.isotope,arguments)};return MasonryMode}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-modes/fit-rows',['../layout-mode'],factory)}else if(typeof exports=='object'){module.exports=factory(require('../layout-mode'))}else{factory(window.Isotope.LayoutMode)}}(window,function factory(LayoutMode){'use strict';var FitRows=LayoutMode.create('fitRows');var proto=FitRows.prototype;proto._resetLayout=function(){this.x=0;this.y=0;this.maxY=0;this._getMeasurement('gutter','outerWidth')};proto._getItemLayoutPosition=function(item){item.getSize();var itemWidth=item.size.outerWidth+this.gutter;var containerWidth=this.isotope.size.innerWidth+this.gutter;if(this.x!==0&&itemWidth+this.x>containerWidth){this.x=0;this.y=this.maxY}
+var position={x:this.x,y:this.y};this.maxY=Math.max(this.maxY,this.y+item.size.outerHeight);this.x+=itemWidth;return position};proto._getContainerSize=function(){return{height:this.maxY}};return FitRows}));(function(window,factory){if(typeof define=='function'&&define.amd){define('isotope/js/layout-modes/vertical',['../layout-mode'],factory)}else if(typeof module=='object'&&module.exports){module.exports=factory(require('../layout-mode'))}else{factory(window.Isotope.LayoutMode)}}(window,function factory(LayoutMode){'use strict';var Vertical=LayoutMode.create('vertical',{horizontalAlignment:0});var proto=Vertical.prototype;proto._resetLayout=function(){this.y=0};proto._getItemLayoutPosition=function(item){item.getSize();var x=(this.isotope.size.innerWidth-item.size.outerWidth)*this.options.horizontalAlignment;var y=this.y;this.y+=item.size.outerHeight;return{x:x,y:y}};proto._getContainerSize=function(){return{height:this.y}};return Vertical}));(function(window,factory){if(typeof define=='function'&&define.amd){define(['outlayer/outlayer','get-size/get-size','desandro-matches-selector/matches-selector','fizzy-ui-utils/utils','isotope/js/item','isotope/js/layout-mode','isotope/js/layout-modes/masonry','isotope/js/layout-modes/fit-rows','isotope/js/layout-modes/vertical'],function(Outlayer,getSize,matchesSelector,utils,Item,LayoutMode){return factory(window,Outlayer,getSize,matchesSelector,utils,Item,LayoutMode)})}else if(typeof module=='object'&&module.exports){module.exports=factory(window,require('outlayer'),require('get-size'),require('desandro-matches-selector'),require('fizzy-ui-utils'),require('isotope/js/item'),require('isotope/js/layout-mode'),require('isotope/js/layout-modes/masonry'),require('isotope/js/layout-modes/fit-rows'),require('isotope/js/layout-modes/vertical'))}else{window.Isotope=factory(window,window.Outlayer,window.getSize,window.matchesSelector,window.fizzyUIUtils,window.Isotope.Item,window.Isotope.LayoutMode)}}(window,function factory(window,Outlayer,getSize,matchesSelector,utils,Item,LayoutMode){var jQuery=window.jQuery;var trim=String.prototype.trim?function(str){return str.trim()}:function(str){return str.replace(/^\s+|\s+$/g,'')};var Isotope=Outlayer.create('isotope',{layoutMode:'masonry',isJQueryFiltering:!0,sortAscending:!0});Isotope.Item=Item;Isotope.LayoutMode=LayoutMode;var proto=Isotope.prototype;proto._create=function(){this.itemGUID=0;this._sorters={};this._getSorters();Outlayer.prototype._create.call(this);this.modes={};this.filteredItems=this.items;this.sortHistory=['original-order'];for(var name in LayoutMode.modes){this._initLayoutMode(name)}};proto.reloadItems=function(){this.itemGUID=0;Outlayer.prototype.reloadItems.call(this)};proto._itemize=function(){var items=Outlayer.prototype._itemize.apply(this,arguments);for(var i=0;i<items.length;i++){var item=items[i];item.id=this.itemGUID++}
 this._updateItemsSortData(items);return items};proto._initLayoutMode=function(name){var Mode=LayoutMode.modes[name];var initialOpts=this.options[name]||{};this.options[name]=Mode.options?utils.extend(Mode.options,initialOpts):initialOpts;this.modes[name]=new Mode(this)};proto.layout=function(){if(!this._isLayoutInited&&this._getOption('initLayout')){this.arrange();return}
 this._layout()};proto._layout=function(){var isInstant=this._getIsInstant();this._resetLayout();this._manageStamps();this.layoutItems(this.filteredItems,isInstant);this._isLayoutInited=!0};proto.arrange=function(opts){this.option(opts);this._getIsInstant();var filtered=this._filter(this.items);this.filteredItems=filtered.matches;this._bindArrangeComplete();if(this._isInstant){this._noTransition(this._hideReveal,[filtered])}else{this._hideReveal(filtered)}
 this._sort();this._layout()};proto._init=proto.arrange;proto._hideReveal=function(filtered){this.reveal(filtered.needReveal);this.hide(filtered.needHide)};proto._getIsInstant=function(){var isLayoutInstant=this._getOption('layoutInstant');var isInstant=isLayoutInstant!==undefined?isLayoutInstant:!this._isLayoutInited;this._isInstant=isInstant;return isInstant};proto._bindArrangeComplete=function(){var isLayoutComplete,isHideComplete,isRevealComplete;var _this=this;function arrangeParallelCallback(){if(isLayoutComplete&&isHideComplete&&isRevealComplete){_this.dispatchEvent('arrangeComplete',null,[_this.filteredItems])}}
@@ -157,10 +157,10 @@ return{matches:matches,needReveal:hiddenMatched,needHide:visibleUnmatched}};prot
 if(typeof filter=='function'){return function(item){return filter(item.element)}}
 return function(item){return matchesSelector(item.element,filter)}};proto.updateSortData=function(elems){var items;if(elems){elems=utils.makeArray(elems);items=this.getItems(elems)}else{items=this.items}
 this._getSorters();this._updateItemsSortData(items)};proto._getSorters=function(){var getSortData=this.options.getSortData;for(var key in getSortData){var sorter=getSortData[key];this._sorters[key]=mungeSorter(sorter)}};proto._updateItemsSortData=function(items){var len=items&&items.length;for(var i=0;len&&i<len;i++){var item=items[i];item.updateSortData()}};var mungeSorter=(function(){function mungeSorter(sorter){if(typeof sorter!='string'){return sorter}
-var args=trim(sorter).split(' ');var query=args[0];var attrMatch=query.match(/^\[(.+)\]$/);var attr=attrMatch&&attrMatch[1];var getValue=getValueGetter(attr,query);var parser=isotope.sortDataParsers[args[1]];sorter=parser?function(elem){return elem&&parser(getValue(elem))}:function(elem){return elem&&getValue(elem)};return sorter}
+var args=trim(sorter).split(' ');var query=args[0];var attrMatch=query.match(/^\[(.+)\]$/);var attr=attrMatch&&attrMatch[1];var getValue=getValueGetter(attr,query);var parser=Isotope.sortDataParsers[args[1]];sorter=parser?function(elem){return elem&&parser(getValue(elem))}:function(elem){return elem&&getValue(elem)};return sorter}
 function getValueGetter(attr,query){if(attr){return function getAttribute(elem){return elem.getAttribute(attr)}}
 return function getChildText(elem){var child=elem.querySelector(query);return child&&child.textContent}}
-return mungeSorter})();isotope.sortDataParsers={'parseInt':function(val){return parseInt(val,10)},'parseFloat':function(val){return parseFloat(val)}};proto._sort=function(){var sortByOpt=this.options.sortBy;if(!sortByOpt){return}
+return mungeSorter})();Isotope.sortDataParsers={'parseInt':function(val){return parseInt(val,10)},'parseFloat':function(val){return parseFloat(val)}};proto._sort=function(){var sortByOpt=this.options.sortBy;if(!sortByOpt){return}
 var sortBys=[].concat.apply(sortByOpt,this.sortHistory);var itemSorter=getItemSorter(sortBys,this.options.sortAscending);this.filteredItems.sort(itemSorter);if(sortByOpt!=this.sortHistory[0]){this.sortHistory.unshift(sortByOpt)}};function getItemSorter(sortBys,sortAsc){return function sorter(itemA,itemB){for(var i=0;i<sortBys.length;i++){var sortBy=sortBys[i];var a=itemA.sortData[sortBy];var b=itemB.sortData[sortBy];if(a>b||a<b){var isAscending=sortAsc[sortBy]!==undefined?sortAsc[sortBy]:sortAsc;var direction=isAscending?1:-1;return(a>b?1:-1)*direction}}
 return 0}}
 proto._mode=function(){var layoutMode=this.options.layoutMode;var mode=this.modes[layoutMode];if(!mode){throw new Error('No layout mode: '+layoutMode)}
@@ -171,166 +171,153 @@ var i,item;var len=items.length;for(i=0;i<len;i++){item=items[i];this.element.ap
 var filteredInsertItems=this._filter(items).matches;for(i=0;i<len;i++){items[i].isLayoutInstant=!0}
 this.arrange();for(i=0;i<len;i++){delete items[i].isLayoutInstant}
 this.reveal(filteredInsertItems)};var _remove=proto.remove;proto.remove=function(elems){elems=utils.makeArray(elems);var removeItems=this.getItems(elems);_remove.call(this,elems);var len=removeItems&&removeItems.length;for(var i=0;len&&i<len;i++){var item=removeItems[i];utils.removeFrom(this.filteredItems,item)}};proto.shuffle=function(){for(var i=0;i<this.items.length;i++){var item=this.items[i];item.sortData.random=Math.random()}
-this.options.sortBy='random';this._sort();this._layout()};proto._noTransition=function(fn,args){var transitionDuration=this.options.transitionDuration;this.options.transitionDuration=0;var returnValue=fn.apply(this,args);this.options.transitionDuration=transitionDuration;return returnValue};proto.getFilteredItemElements=function(){return this.filteredItems.map(function(item){return item.element})};return isotope}));
+this.options.sortBy='random';this._sort();this._layout()};proto._noTransition=function(fn,args){var transitionDuration=this.options.transitionDuration;this.options.transitionDuration=0;var returnValue=fn.apply(this,args);this.options.transitionDuration=transitionDuration;return returnValue};proto.getFilteredItemElements=function(){return this.filteredItems.map(function(item){return item.element})};return Isotope}));
 
+// FILTER VIA BUTTONS
 
-$(document).ready(function () {
-    
-    // FILTER VIA SEARCH
+(function($){
 
-    var qsRegex;
-
-    var $grid = $('.search-results').isotope({
-        itemSelector: '.single-search-result',
-        layoutMode: 'vertical',
-        filter: function () {
-            return qsRegex ? $(this).text().match(qsRegex) : true;
-        }
-    });
-
-    function searchFilter() {
-        qsRegex = new RegExp($quicksearch.val(), 'gi');
-        $grid.isotope();
+// init Isotope
+var $grid = $('.grid').isotope({
+    itemSelector: '.grid-item',
+    layoutMode: 'masonry',
+    getSortData: {
+        name: '.filter-values'
     }
-
-    var $quicksearch = $('.quick-search').keyup( debounce( searchFilter ) );
-    
-    $('.quick-search').on('focus', function () {
-        $grid.isotope();
-        searchFilter();
-    });
-
-//     $grid.on('arrangeComplete', function (event, filteredItems) {
-//         if (filteredItems.length === 0) {
-//           $('.no-results').fadeIn(500);
-//         } else {
-//           $('.no-results').fadeOut(150);
-//         }
-//     });
-
-    function debounce(fn, threshold) {
-        var timeout;
-        return function debounced() {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-
-            function delayed() {
-                fn();
-                timeout = null;
-            }
-            timeout = setTimeout(delayed, threshold || 350);
-        }
-    }
-    
-    
-    
-    // FILTER VIA BUTTONS
-
-    (function($){
-        
-    var $grid = $('.grid').isotope({
-        itemSelector: '.grid-item',
-        layoutMode: 'masonry',
-        getSortData: {
-            name: '.filter-values'
-        }
-    });
-        
-    var filterFns = {
-
-        //--- Dark Rides
-
-        'license-free': function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /license-free/gi );
-        },
-
-        ip: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /ip/gi );
-        },
-
-        educational: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /educational/gi );
-        },
-
-        'animated-shows': function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /animated-shows/gi );
-        },
-
-        blacklight: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /blacklight/gi );
-        },
-
-        custom: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /blacklight/gi );
-        },
-
-        redeveloped: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /redeveloped/gi );
-        },
-
-        interactive: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /interactive/gi );
-        },
-
-        'mixed-media': function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /mixed-media/gi );
-        },
-
-        //---- Animatronics
-
-        lifelike: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /lifelike/gi );
-        },
-
-        fantasy: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /fantasy/gi );
-        },
-
-        haunted: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /haunted/gi );
-        },
-
-        animals: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /animals/gi );
-        },
-
-        shows: function() {
-            var name = $(this).find('.filter-values').text();
-            return name.match( /shows/gi );
-        }
-    };
-
-    $('#filters').on( 'click', 'a', function() {
-        var filterValue = $( this ).attr('data-filter');
-        // use filterFn if matches value
-        filterValue = filterFns[ filterValue ] || filterValue;
-        $grid.isotope({ filter: filterValue });
-    });
-
-    $('.button-group').each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'a', function() {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
-        });
-    });
-    })(jQuery)
-
 });
+
+// filter functions
+var filterFns = {
+
+    //--- Dark Rides
+
+    'license-free': function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /license-free/gi );
+    },
+
+    ip: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /ip/gi );
+    },
+
+    educational: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /educational/gi );
+    },
+
+    'animated-shows': function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /animated-shows/gi );
+    },
+
+    blacklight: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /blacklight/gi );
+    },
+
+    custom: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /blacklight/gi );
+    },
+
+    redeveloped: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /redeveloped/gi );
+    },
+
+    interactive: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /interactive/gi );
+    },
+
+    'mixed-media': function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /mixed-media/gi );
+    },
+
+    //---- Animatronics
+
+    lifelike: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /lifelike/gi );
+    },
+
+    fantasy: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /fantasy/gi );
+    },
+
+    haunted: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /haunted/gi );
+    },
+
+    animals: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /animals/gi );
+    },
+
+    shows: function() {
+        var name = $(this).find('.filter-values').text();
+        return name.match( /shows/gi );
+    }
+};
+
+// bind filter button click
+$('#filters').on( 'click', 'a', function() {
+    var filterValue = $( this ).attr('data-filter');
+    // use filterFn if matches value
+    filterValue = filterFns[ filterValue ] || filterValue;
+    $grid.isotope({ filter: filterValue });
+});
+
+// change is-checked class on buttons
+$('.button-group').each( function( i, buttonGroup ) {
+    var $buttonGroup = $( buttonGroup );
+    $buttonGroup.on( 'click', 'a', function() {
+        $buttonGroup.find('.is-checked').removeClass('is-checked');
+        $( this ).addClass('is-checked');
+    });
+});
+})(jQuery)
+
+
+// FILTER VIA SEARCH
+
+var qsRegex;
+
+// init Isotope
+var $grid = $('.search-results').isotope({
+    itemSelector: '.single-search-result',
+    layoutMode: 'vertical',
+    filter: function () {
+        return qsRegex ? $(this).text().match(qsRegex) : true;
+    }
+});
+
+// use value of search field to filter
+var $quicksearch = $('.quick-search').keyup(debounce(function () {
+    qsRegex = new RegExp($quicksearch.val(), 'gi');
+    $grid.isotope();
+}, 200));
+
+
+// debounce so filtering doesn't happen every millisecond
+function debounce(fn, threshold) {
+    var timeout;
+    return function debounced() {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+
+        function delayed() {
+            fn();
+            timeout = null;
+        }
+        timeout = setTimeout(delayed, threshold || 100);
+    }
+};
 
 
 //=============================================================
