@@ -26,10 +26,14 @@ a:focus, button:focus {
     .nav-social-link {
         display: none;
     }
+    
+    .nav-sep {
+        margin: 0 5px;
+    }
 }
 
 @media (max-width: 991px) {
-    .nav-social-link {
+    .nav-social-link,.nav-sep {
         display: flex;
     }
 }
