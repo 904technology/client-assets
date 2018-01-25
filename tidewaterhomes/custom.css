@@ -28,12 +28,18 @@ a:focus, button:focus {
     }
     
     .nav-sep {
-        margin: 0 5px;
+        margin-right: 10px;
+        margin-left: 0px;
     }
 }
 
 @media (max-width: 991px) {
     .nav-social-link,.nav-sep {
         display: flex;
+    }
+    
+    .nav-sep {
+        margin-right: 20px;
+        margin-left: 20px;
     }
 }
