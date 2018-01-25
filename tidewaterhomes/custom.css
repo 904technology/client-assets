@@ -22,7 +22,7 @@ a:focus, button:focus {
     border: 0px !important;
 }
 
-@media (max-width: 1115px) {
+@media (max-width: 1150px) {
     .nav-social-link {
         display: none;
     }
