@@ -191,4 +191,4 @@ else if(item.thumbnail!==undefined){post.attachment='<img class="attachment" src
 if(postHTML){var imgurl='';imgurl=$(postHTML).find('img:first').attr('src');if(imgurl!==''&&imgurl!==undefined)post.attachment='<img class="attachment" src="'+imgurl+'" />'}}}
 return post}}}};return this.each(function(){Feed.init();if(options.update_period){setInterval(function(){return Feed.init()},options.update_period)}})}})(jQuery);
 
-var tempHTML = '<a href="{{=it.link}}" class="insta-listing-link w-inline-block" dt-create="{{=it.dt_create}} "social-feed-id = "{{=it.id}}"><div class="instafeed-image">{{=it.attachment}}</div></a>';
+var tempHTML = '<div class="insta-listing-wrap" dt-create="{{=it.dt_create}} "social-feed-id = "{{=it.id}}"><a href="{{=it.link}}" class="insta-listing-link w-inline-block"><div class="instafeed-image">{{=it.attachment}}</div></a></div>';
