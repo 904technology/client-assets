@@ -177,8 +177,10 @@ this.options.sortBy='random';this._sort();this._layout()};proto._noTransition=fu
 
 (function($){
     
-$('#grid1').append($('#grid2,#grid3').html());
-$('#grid2,#grid3').closest('.w-dyn-list').remove();
+$('#grid1').append($('#grid2').html());
+$('#grid1').append($('#grid3').html());
+$('#grid2').closest('.w-dyn-list').remove();
+$('#grid3').closest('.w-dyn-list').remove();
 
 // init Isotope
 var $grid = $('#grid1').isotope({
