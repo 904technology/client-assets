@@ -176,9 +176,12 @@ this.options.sortBy='random';this._sort();this._layout()};proto._noTransition=fu
 // FILTER VIA BUTTONS
 
 (function($){
+    
+$('#grid1').append($('#grid2,#grid3').html());
+$('#grid2,#grid3').closest('.w-dyn-list').remove();
 
 // init Isotope
-var $grid = $('.grid').isotope({
+var $grid = $('#grid1').isotope({
     itemSelector: '.grid-item',
     layoutMode: 'masonry',
     getSortData: {
@@ -289,35 +292,35 @@ var qsRegex;
 
 // init Isotope
 var $grid = $('.search-results').isotope({
-    itemSelector: '.single-search-result',
-    layoutMode: 'vertical',
-    filter: function () {
-        return qsRegex ? $(this).text().match(qsRegex) : true;
-    }
+itemSelector: '.single-search-result',
+layoutMode: 'vertical',
+filter: function() {
+    return qsRegex ? $(this).text().match( qsRegex ) : true;
+}
 });
 
 // use value of search field to filter
-var $quicksearch = $('.quick-search').keyup(debounce(function () {
-    qsRegex = new RegExp($quicksearch.val(), 'gi');
-    $grid.isotope();
-}, 200));
+var $quicksearch = $('.quick-search').keyup( debounce( function() {
+qsRegex = new RegExp( $quicksearch.val(), 'gi' );
+$grid.isotope();
+}, 200 ) );
 
 
 // debounce so filtering doesn't happen every millisecond
-function debounce(fn, threshold) {
-    var timeout;
-    return function debounced() {
-        if (timeout) {
-            clearTimeout(timeout);
-        }
-
-        function delayed() {
-            fn();
-            timeout = null;
-        }
-        timeout = setTimeout(delayed, threshold || 100);
+function debounce( fn, threshold ) {
+var timeout;
+return function debounced() {
+    if ( timeout ) {
+        clearTimeout( timeout );
     }
-};
+    function delayed() {
+        fn();
+        timeout = null;
+    }
+    timeout = setTimeout( delayed, threshold || 100 );
+}
+} ;
+
 
 
 //=============================================================
