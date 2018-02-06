@@ -181,6 +181,7 @@ $('#grid1').append($('#grid2').html());
 $('#grid1').append($('#grid3').html());
 $('#grid2').closest('.w-dyn-list').remove();
 $('#grid3').closest('.w-dyn-list').remove();
+$('.w-dyn-empty').closest('.w-dyn-list').remove();
 
 // init Isotope
 var $grid = $('#grid1').isotope({
