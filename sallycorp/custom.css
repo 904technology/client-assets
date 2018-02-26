@@ -32,4 +32,4 @@ top: 0px !important;
 }
 */
 
-.animatronic-main-image,.darkride-main-image {cursor: url(https://daks2k3a4ib2z.cloudfront.net/596e3d14635c203ba1480acf/59baea9539f26b000115bc12_zoom.png), default;}
+.zoom-pan-font {pointer-events: none; user-select: none;}
