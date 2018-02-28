@@ -28,7 +28,7 @@ a:focus, button:focus {
     }
     
     .nav-sep {
-        margin-right: 10px;
+        margin-right: 20px;
         margin-left: 0px;
     }
 }
@@ -43,3 +43,5 @@ a:focus, button:focus {
         margin-left: 20px;
     }
 }
+
+.gallery-image {pointer-events: none;}
