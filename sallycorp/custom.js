@@ -422,7 +422,10 @@ $(document).ready(function() {
         }
     });
 
-    $('.zoom-image').smartZoom({'containerClass':'zoomableContainer'});
+    $('.zoom-image').smartZoom({
+        'containerClass':'zoomableContainer',
+        'scrollEnabled' : false
+    });
 
     $('.pan-arrow-up,.pan-arrow-left,.pan-arrow-right,.pan-arrow-down').bind("click", moveButtonClickHandler);
     $('.zoom-in,.zoom-out').bind("click", zoomButtonClickHandler);
