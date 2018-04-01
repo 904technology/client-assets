@@ -10,5 +10,5 @@ maxSlides: 8,
 slideWidth: 170,
 slideMargin: 10,
 ticker: true,
-speed: 250000
+speed: 150000
 });
