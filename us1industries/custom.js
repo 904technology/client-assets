@@ -7,7 +7,7 @@
 $('[data-slider="row"]').bxSlider({
 minSlides: 1,
 maxSlides: 8,
-slideWidth: 170,
+slideWidth: 300,
 slideMargin: 10,
 ticker: true,
 speed: 150000
