@@ -418,7 +418,7 @@ $(document).ready(function() {
         minScale: 1,
         maxScale: 10,
         duration: 700,
-        easing: "ease-in-out",
-        linearZoom: true
+        linearZoom: true,
+        focal: { clientX: (window.innerWidth / 2), clientY: (window.innerHeight / 2) }
     });
 });
